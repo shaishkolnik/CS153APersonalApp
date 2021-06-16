@@ -38,7 +38,7 @@ const Profile = (props) => {
             setEmail(data.email)
             console.log('just set Info, Name and Email')
           } else {
-            console.log('just read a null value from Storage')
+            console.log('just read a null value from Storate')
             setInfo({})
             setName("")
             setEmail("")

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {  FlatList, Text, View, Button } from 'react-native';
+import { ActivityIndicator, FlatList, Text, View } from 'react-native';
 
 const FetchDemo2 = () => {
   const [isLoading, setLoading] = useState(true);
@@ -15,20 +15,17 @@ const FetchDemo2 = () => {
 
   return (
     <View style={{ flex: 1, padding: 24 }}>
-      {isLoading ? (<Text>Loading</Text>) : (
-        <View>
-          <Text>Recent Movies</Text>
-          <FlatList
-            data={data}
-            keyExtractor={({ id }, index) => id}
-            renderItem={({ item }) => (
-              <Text>{item.title}, {item.releaseYear}</Text>
-            )}
-          />
-        </View>
+      {isLoading ? <ActivityIndicator/> : (
+        <FlatList
+          data={data}
+          keyExtractor={({ id }, index) => id}
+          renderItem={({ item }) => (
+            <Text>{item.title}, {item.releaseYear}</Text>
+          )}
+        />
       )}
     </View>
   );
 };
 
-export default FetchDemo2
+export default FetchDemo2;

@@ -1,183 +1,105 @@
-import React, { useState, useEffect }  from 'react';
-import { SafeAreaView, ScrollView, View, Button,
-         FlatList, StyleSheet, Text, TextInput, StatusBar } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState } from "react";
+import { Button, TextInput, SafeAreaView, ScrollView, View, FlatList, StyleSheet, Text, StatusBar } from 'react-native';
+
 
 const ToDoList = (props) => {
-  const [todo,setTodo] = useState("")
-  const [dueDate,setDueDate] = useState("")
-  const [comment,setComment] = useState("")
-  const [todoItems,setToDoItems]= useState([])
+  const [text, setText] = useState("");
+  const [data, setData] = useState([]);
+  const [date, setDate] = useState();
+  const [comment, setComment] = useState("");
+  const [toDoItems, setToDoItems] = useState([]);
 
-  useEffect(() => {getData()}
-           ,[])
-
-  const getData = async () => {
-        try {
-          // the '@profile_info' can be any string
-          const jsonValue = await AsyncStorage.getItem('@todo_list')
-          let data = null
-          if (jsonValue!=null) {
-            data = JSON.parse(jsonValue)
-            setToDoItems(data)
-            console.log('just set Info, Name and Email')
-          } else {
-            console.log('just read a null value from Storage')
-            setInfo({})
-            setName("")
-            setEmail("")
-          }
-
-
-        } catch(e) {
-          console.log("error in getData ")
-          console.dir(e)
-          // error reading value
-        }
-  }
-
-  const storeData = async (value) => {
-        try {
-          const jsonValue = JSON.stringify(value)
-          await AsyncStorage.setItem('@todo_list', jsonValue)
-          console.log('just stored '+jsonValue)
-        } catch (e) {
-          console.log("error in storeData ")
-          console.dir(e)
-          // saving error
-        }
-  }
-
-  const clearAll = async () => {
-        try {
-          console.log('in clearData')
-          await AsyncStorage.clear()
-        } catch(e) {
-          console.log("error in clearData ")
-          console.dir(e)
-          // clear error
-        }
-  }
-
-
-  const renderTodoItem = ({item}) => {
+  const renderItem = ({item}) => {
     return (
-      <View style={{border:'thin solid red'}}>
-        <Text style={styles.todoItem}>
-           <Text>{item.todo} by </Text>
-           <Text> {item.dueDate} </Text>
-           <Text> -- {item.comment} </Text>
-        </Text>
+      <View style = {{border: 'thin solid red', flexDirection: 'row'}}>
+        <Text>{item.todo} by </Text>
+        <Text> {item.date} </Text>
+        <Text> --{item.comment} </Text>
       </View>
     )
   }
 
-  let debug=false
-  const debugView =
-    (<View>
-      <Text style={styles.headerText}>
-        DEBUGGING INFO
-      </Text>
-      <Text>
-         todo is ({todo})
-      </Text>
-      <Text>
-         dueDate is ({dueDate})
-      </Text>
-      <Text>
-         comment is ({comment})
-      </Text>
-      <Text>
-         todoItems is {JSON.stringify(todoItems)}
-      </Text>
-  </View>);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}> ToDo List </Text>
-      <View>
-        <TextInput
-          style={{height: 20}}
-          placeholder="Enter todo item here"
-          onChangeText={text => {
-               setTodo(text);
-             }}
-          value = {todo}
+      <Text style={styles.header}>Todo List</Text>
+
+      <SafeAreaView style={styles.container}>
+        <FlatList
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={({  }, index) => index}
         />
-      </View>
-      <View>
+      </SafeAreaView>
+
+      <View style={styles.rowContainer}>
+        <Text>Item:</Text>
+
         <TextInput
-          style={{height: 20}}
-          placeholder="Enter due date"
-          onChangeText={text => {
-               setDueDate(text);
-             }}
-          value = {dueDate}
-        />
+          style={styles.textinput}
+          placeholder = "add tasks here"
+          onChangeText={text => {setText(text)}}
+          value = {text}
+          />
+
       </View>
-      <View>
+
+      <View style={styles.rowContainer}>
+        <Text>due date:</Text>
+
         <TextInput
-          style={{height: 20}}
-          placeholder="Enter comment"
-          onChangeText={text => {
-               setComment(text);
-             }}
+          style={styles.textinput}
+          placeholder = "add due date here"
+          onChangeText={date => {setDate(date)}}
+          value = {date}
+          />
+
+      </View>
+
+      <View style={styles.rowContainer}>
+        <Text>comment:</Text>
+
+        <TextInput
+          style={styles.textinput}
+          placeholder = "add comment here"
+          onChangeText={comment => {setComment(comment)}}
           value = {comment}
+          />
+
+      </View>
+
+      <Button title="add"
+              color= 'blue'
+              onPress = {() => {setData(data.concat({'todo': text, 'date': date, 'comment': comment }))}}
         />
-      </View>
-      <View>
-        <Button
-           title={"add"}
-           color="blue"
-           onPress = {() => {
-             const newToDoItems =
-               todoItems.concat(
-                 {'todo':todo,
-                 'dueDate':dueDate,
-                 'comment':comment,
-                 'date':new Date()
-               })
-             setToDoItems(newToDoItems)
-             storeData(newToDoItems)
-             setTodo("")
-             setDueDate("")
-             setComment("")
-           }}
-           />
-      </View>
-      <FlatList
-        data={todoItems}
-        renderItem={renderTodoItem}
-        keyExtractor={item => item.date}
-      />
-      {debug?debugView: ""}
+
+      <Text>text is ({text})</Text>
+      <Text>todo list is {JSON.stringify(data)}</Text>
+      <Text>date is {date}</Text>
     </View>
-  );
+  )
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create ({
   container: {
     flex: 1,
     flexDirection:'column',
-    backgroundColor: '#eee',
-    alignItems: 'left',
-    justifyContent: 'left',
-    textAlign:'left',
-    marginTop:20,
-    padding:20,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  todoItem:{
-    justifyContent:'left',
+  textinput:{
+    margin:20,
+    fontSize:20
   },
-  headerText: {
-    textAlign:'center',
-    backgroundColor:'#aaa',
-    fontSize: 16,
-    padding:10,
-    color: 'blue'
+  header: {
+    fontSize:40,
+    color:'blue'
   },
-
+  rowContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  }
 });
-
 
 export default ToDoList;

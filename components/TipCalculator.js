@@ -21,7 +21,7 @@ const TipCalculator = (props) => {
     <Button
           color='red' title='Calculate Tip'
           onPress = {() =>
-               setTip(meal*props.tipRate)          }
+               setTip(meal*props.tipRate)}
       />
 
     <Text> The tip is {tip} </Text>
