@@ -1,28 +1,31 @@
 import React, { useState } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { createStackNavigator } from '@react-navigation/stack';
 
 
-const TipCalculator = (navigation, props) => {
-  const [meal, setMeal] = useState(0);
-  const [tip, setTip] = useState(0);
+const NewProfile = (props) => {
+  const [height, setHeight] = useState(0);
+  const [weight, setWeight] = useState(0);
+  const [name, setName] = useState(props.name);
 
 
       return (
   <View style={styles.container}>
     <Text style={styles.header}>
-       Tip Calculator for tiprate = {props.tipRate}
+        {name}'s Profile
     </Text>
-    <TextInput
-          style={styles.textinput}
-          onChangeText={text => {setMeal(parseFloat(text))}}
-      />
+
+    <View style={styles.rowContainer}>
+      <Text>Name:</Text>
+      <TextInput
+            style={styles.textinput}
+            onChangeText={text => {setName(text)}}
+        />
+    </View>
     <Button
-          color='red' title='Calculate Tip'
-          onPress = {() =>
-               setTip(meal*props.tipRate)}
+          color='red' title='Calculate BMI'
       />
 
-    <Text> The tip is {tip} </Text>
   </View>
       );
     }
@@ -48,4 +51,4 @@ const TipCalculator = (navigation, props) => {
     },
   });
 
-export default TipCalculator;
+export default NewProfile;
