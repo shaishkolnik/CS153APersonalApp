@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { Image, TextInput, Button, StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-
+import TipCalculator from './components/TipCalculator';
 
 const Stack = createStackNavigator();
 
@@ -19,6 +19,7 @@ export default function App () {
             options={{ title: 'HW2 - GoActive with added interactivity' }}
           />
           <Stack.Screen name="Profile" component={ProfileScreen} />
+          <Stack.Screen name="TipCalc" component={TipCalculator} />
           <Stack.Screen name="About" component={AboutScreen} />
           <Stack.Screen name="Meal Plan" component={mealPlan} />
         </Stack.Navigator>
@@ -34,6 +35,14 @@ const HomeScreen = ({ navigation }) => {
         title="Your profile"
         onPress={() =>
           navigation.navigate('Profile', { name: 'Shai' })
+        }
+      />
+
+      <Button
+        color='red'
+        title="TipCalc"
+        onPress={() =>
+          navigation.navigate('TipCalc', { tipRate: 20 })
         }
       />
 
@@ -61,7 +70,7 @@ const ProfileScreen = ({ navigation, route }) => {
   return <Text>This is {route.params.name}'s profile</Text>;
 };
 
-const mealPlan = ({ navigation, route }) => {
+const mealPlan = ({ navigation }) => {
 
   return(
   <View style={styles.container}>

@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 
 
-// const mph2fps = (mph) => mph*5280/3600
-
-const TipCalculator = (props) => {
+const TipCalculator = (navigation, props) => {
   const [meal, setMeal] = useState(0);
   const [tip, setTip] = useState(0);
 
