@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 const NewProfile = (props) => {
   const [height, setHeight] = useState(0);
   const [weight, setWeight] = useState(0);
+  const [bmi, setBMI] = useState();
   const [name, setName] = useState(props.name);
 
 
@@ -15,6 +16,10 @@ const NewProfile = (props) => {
         {name}'s Profile
     </Text>
 
+    <Text>
+        Your BMI is {bmi}
+    </Text>
+
     <View style={styles.rowContainer}>
       <Text>Name:</Text>
       <TextInput
@@ -22,8 +27,26 @@ const NewProfile = (props) => {
             onChangeText={text => {setName(text)}}
         />
     </View>
+    <View style={styles.rowContainer}>
+      <Text>Height:</Text>
+      <TextInput
+            style={styles.textinput}
+            onChangeText={text => {setHeight(text)}}
+        />
+    </View>
+
+    <View style={styles.rowContainer}>
+      <Text>Weight:</Text>
+      <TextInput
+            style={styles.textinput}
+            onChangeText={text => {setWeight(text)}}
+        />
+    </View>
+
     <Button
-          color='red' title='Calculate BMI'
+          color='red' title='Add BMI'
+          onPress = {() =>
+            setBMI((weight/height/height)*703)}
       />
 
   </View>
