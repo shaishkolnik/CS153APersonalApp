@@ -16,7 +16,7 @@ export default function App () {
           <Stack.Screen
             name="Home"
             component={HomeScreen}
-            options={{ title: 'HW1 - GoActive Sketch' }}
+            options={{ title: 'HW2 - GoActive with added interactivity' }}
           />
           <Stack.Screen name="Profile" component={ProfileScreen} />
           <Stack.Screen name="About" component={AboutScreen} />
