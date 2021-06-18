@@ -28,7 +28,7 @@ const NewProfile = (props) => {
         />
     </View>
     <View style={styles.rowContainer}>
-      <Text>Height:</Text>
+      <Text>Height (in):</Text>
       <TextInput
             style={styles.textinput}
             onChangeText={text => {setHeight(text)}}
@@ -36,7 +36,7 @@ const NewProfile = (props) => {
     </View>
 
     <View style={styles.rowContainer}>
-      <Text>Weight:</Text>
+      <Text>Weight (lb):</Text>
       <TextInput
             style={styles.textinput}
             onChangeText={text => {setWeight(text)}}
@@ -44,7 +44,7 @@ const NewProfile = (props) => {
     </View>
 
     <Button
-          color='red' title='Add BMI'
+          color='brown' title='Add BMI'
           onPress = {() =>
             setBMI((weight/height/height)*703)}
       />
@@ -66,7 +66,7 @@ const NewProfile = (props) => {
     },
     header: {
       fontSize:40,
-      color:'blue'
+      color:'green'
     },
     rowContainer: {
       flexDirection: 'row',
