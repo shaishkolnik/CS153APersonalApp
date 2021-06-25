@@ -6,6 +6,8 @@ import { Image, TextInput, Button, StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import CreateProf from './components/CreateProf';
+import workPlan from './components/workPlan';
+import CombinedList from './components/CombinedList';
 
 const Stack = createStackNavigator();
 
@@ -16,12 +18,13 @@ export default function App () {
           <Stack.Screen
             name="Home"
             component={HomeScreen}
-            options={{ title: 'HW2 - GoActive with added interactivity' }}
+            options={{ title: 'GoActive' }}
           />
           <Stack.Screen name="Profile" component={ProfileScreen} />
           <Stack.Screen name="CreateProf" component={CreateProf} />
           <Stack.Screen name="About" component={AboutScreen} />
-          <Stack.Screen name="Meal Plan" component={mealPlan} />
+          <Stack.Screen name="workPlan" component={workPlan} />
+          <Stack.Screen name="combList" component={CombinedList} />
         </Stack.Navigator>
     </NavigationContainer>
   );
@@ -29,7 +32,8 @@ export default function App () {
 
 const HomeScreen = ({ navigation }) => {
   return (
-    <View>
+    <View style={styles.container}>
+    <View style={styles.container}>
       <Button
         color='green'
         title="Your profile"
@@ -37,7 +41,9 @@ const HomeScreen = ({ navigation }) => {
           navigation.navigate('Profile', { name: 'Shai' })
         }
       />
+    </View>
 
+    <View style={styles.container}>
       <Button
         color='red'
         title="Create a new Profile"
@@ -45,24 +51,40 @@ const HomeScreen = ({ navigation }) => {
           navigation.navigate('CreateProf')
         }
       />
+    </View>
 
+    <View style={styles.container}>
       <Button
         color='orange'
-        title="Add Meal Plan"
+        title="Add Workout Plan"
         onPress={() =>
-          navigation.navigate('Meal Plan')
+          navigation.navigate('workPlan')
         }
       />
-
-      <Button
-        color='blue'
-        title="About"
-        onPress={() =>
-          navigation.navigate('About')
-        }
-      />
-
     </View>
+
+      <View style={styles.container}>
+        <Button
+          color='blue'
+          title="About"
+          onPress={() =>
+            navigation.navigate('About')
+          }
+      />
+      </View>
+
+      <View style={styles.container}>
+        <Button
+          color='grey'
+          title="Combined List"
+          onPress={() =>
+            navigation.navigate('combList')
+          }
+      />
+      </View>
+    </View>
+
+
   );
 };
 
@@ -108,7 +130,7 @@ const AboutScreen = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 0.5,
     flexDirection:'column',
     backgroundColor: '#fff',
     alignItems: 'center',

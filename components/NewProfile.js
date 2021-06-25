@@ -8,6 +8,7 @@ const NewProfile = (props) => {
   const [weight, setWeight] = useState(0);
   const [bmi, setBMI] = useState();
   const [name, setName] = useState(props.name);
+  const [text, setText] = useState();
 
 
       return (
@@ -24,30 +25,40 @@ const NewProfile = (props) => {
       <Text>Name:</Text>
       <TextInput
             style={styles.textinput}
-            onChangeText={text => {setName(text)}}
+            onChangeText={text => {setText(text)}}
         />
-    </View>
-    <View style={styles.rowContainer}>
-      <Text>Height (in):</Text>
-      <TextInput
-            style={styles.textinput}
-            onChangeText={text => {setHeight(text)}}
-        />
-    </View>
-
-    <View style={styles.rowContainer}>
-      <Text>Weight (lb):</Text>
-      <TextInput
-            style={styles.textinput}
-            onChangeText={text => {setWeight(text)}}
+      <Button
+              color='green' title='Change Name'
+              onPress = {() =>
+                setName(text)}
+              value = {name}
         />
     </View>
 
-    <Button
-          color='brown' title='Add BMI'
-          onPress = {() =>
-            setBMI((weight/height/height)*703)}
-      />
+    <View style={styles.rowContainer}>
+      <View>
+        <View style={styles.rowContainer}>
+          <Text>Height (in):</Text>
+          <TextInput
+                style={styles.textinput}
+                onChangeText={text => {setHeight(text)}}
+            />
+        </View>
+
+        <View style={styles.rowContainer}>
+          <Text>Weight (lb):</Text>
+          <TextInput
+                style={styles.textinput}
+                onChangeText={text => {setWeight(text)}}
+            />
+        </View>
+      </View>
+      <Button
+            color='brown' title='Add BMI'
+            onPress = {() =>
+              setBMI((weight/height/height)*703)}
+        />
+    </View>
 
   </View>
       );
@@ -62,7 +73,10 @@ const NewProfile = (props) => {
     },
     textinput:{
       margin:20,
-      fontSize:20
+      fontSize:20,
+      backgroundColor: '#d3d3d3',
+      paddingLeft: 15,
+      paddingRight: 15
     },
     header: {
       fontSize:40,
@@ -71,6 +85,7 @@ const NewProfile = (props) => {
     rowContainer: {
       flexDirection: 'row',
       alignItems: 'center',
+      justifyContent: 'flex-start'
     },
   });
 
