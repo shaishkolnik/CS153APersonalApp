@@ -12,8 +12,9 @@ const WorkItem = (props) => {
     <View style={styles.container, {border:'solid black'} }>
       <Text style={styles.todoItem}>
          <Text>{item.todo} </Text>
-         <Text>{item.dueDate} sets</Text>
-         <Text> {item.comment} each. </Text>
+         <Text>using {item.tool}, </Text>
+         <Text>do {item.dueDate} sets</Text>
+         <Text> of {item.comment} reps each. </Text>
          <Button
            onPress={() => {item.isDone = !item.isDone; setIsDone(item.isDone)}}
            title={!isDone ? "Completed?" : "Done! Try Again?"}
@@ -25,10 +26,12 @@ const WorkItem = (props) => {
 
 const workPlan = (props) => {
   const [todo,setTodo] = useState("")
+  const [tool, setTool] = useState("")
   const [dueDate,setDueDate] = useState("")
   const [comment,setComment] = useState("")
   const [todoItems,setToDoItems]= useState([])
   const [isDone, setIsDone] = useState(false);
+
 
   useEffect(() => {getData()}
            ,[])
@@ -123,6 +126,16 @@ const workPlan = (props) => {
       <View>
         <TextInput
           style={{height: 20}}
+          placeholder="Equipment"
+          onChangeText={text => {
+               setTool(text);
+             }}
+          value = {tool}
+        />
+      </View>
+      <View>
+        <TextInput
+          style={{height: 20}}
           placeholder="Sets"
           onChangeText={text => {
                setDueDate(text);
@@ -140,7 +153,7 @@ const workPlan = (props) => {
           value = {comment}
         />
       </View>
-      <View>
+      <View style={styles.rowContainer}>
         <Button
            title={"add"}
            color="blue"
@@ -148,6 +161,7 @@ const workPlan = (props) => {
              const newToDoItems =
                todoItems.concat(
                  {'todo':todo,
+                 'tool':tool,
                  'dueDate':dueDate,
                  'comment':comment,
                  'date':new Date(),
@@ -156,6 +170,7 @@ const workPlan = (props) => {
              setToDoItems(newToDoItems)
              storeData(newToDoItems)
              setTodo("")
+             setTool("")
              setDueDate("")
              setComment("")
            }}
@@ -197,6 +212,10 @@ const styles = StyleSheet.create({
     padding:10,
     color: 'blue'
   },
+  rowContainer: {
+    flexDirection:'row',
+    justifyContent: 'center'
+  }
 
 });
 

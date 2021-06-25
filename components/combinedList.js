@@ -4,13 +4,14 @@ import {View, StyleSheet, Text, FlatList, Switch, SafeAreaView, TouchableOpacity
 export default (props) => {
   const [open, setOpen] = React.useState(false)
   const [data, setData] = React.useState([
-    { label: 'temperature', selected:false },
-    { label: 'humidity', },
-    { label: 'light', },
-    { label: 'move', },
-    { label: 'sound', },
-    { label: 'carbon dioxide', },
-    { label: 'air pollution', }
+    { label: 'chest', selected:false },
+    { label: 'triceps', },
+    { label: 'back', },
+    { label: 'biceps', },
+    { label: 'legs', },
+    { label: 'shoulders', },
+    { label: 'abs', },
+
   ])
   const openList = () => setOpen(true)
   const closeList = () => setOpen(false)
@@ -22,17 +23,17 @@ export default (props) => {
       <View style={{ flex: 1, backgroundColor: '#FFF', padding: 16 }}>
         <TouchableOpacity onPress={openList}>
           <View style={{ padding: 16, borderWidth: 1, borderColor: '#000' }}>
-            <Text>Select Items</Text>
+            <Text>Select Body Part</Text>
           </View>
         </TouchableOpacity>
         <View>
-          <Text>Selected Items</Text>
+          <Text>Recommended Workouts</Text>
           {data.filter(item => item.selected).map(item => <Text key={item.label}>{item.label}</Text>)}
         </View>
       </View>
       <Modal animationType='slide' transparent={true} visible={open === true}>
-        <TouchableOpacity activeOpacity={1} onPress={closeList} style={{ flex: 1 }}>
-          <View style={{ flex: 1, marginTop: 250 }}>
+        <TouchableOpacity activeOpacity={1} onPress={closeList}>
+          <View style={{ flex: 1}}>
             <View style={styles.listWrapper}>
               <View style={styles.listContainer}>
                 <FlatList
@@ -56,7 +57,6 @@ const ItemRenderer = ({ index, label, selected, onUpdateValue }) => <View style=
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
   },
   listWrapper: {
     flex: 1,
@@ -78,7 +78,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#CCCCCC55'
   },
   tabHeading: {
     padding: 20,

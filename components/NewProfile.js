@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import { createStackNavigator } from '@react-navigation/stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const NewProfile = (props) => {
@@ -29,9 +30,10 @@ const NewProfile = (props) => {
         />
       <Button
               color='green' title='Change Name'
-              onPress = {() =>
-                setName(text)}
-              value = {name}
+              onPress = {() => {
+                setName(text)
+                storeData(name)
+              }}
         />
     </View>
 
@@ -55,14 +57,19 @@ const NewProfile = (props) => {
       </View>
       <Button
             color='brown' title='Add BMI'
-            onPress = {() =>
-              setBMI((weight/height/height)*703)}
+            onPress = {() => {
+              const newBMI = (weight/height/height)*703
+              setBMI(newBMI)
+              storeData(bmi)
+            }}
+            value = {bmi}
         />
     </View>
 
   </View>
       );
     }
+
   const styles = StyleSheet.create ({
     container: {
       flex: 1,
