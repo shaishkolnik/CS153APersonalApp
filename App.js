@@ -63,6 +63,16 @@ const HomeScreen = ({ navigation }) => {
       />
     </View>
 
+    <View style={styles.container}>
+      <Button
+        color='grey'
+        title="Combined List"
+        onPress={() =>
+          navigation.navigate('combList')
+        }
+    />
+    </View>
+
       <View style={styles.container}>
         <Button
           color='blue'
@@ -72,16 +82,7 @@ const HomeScreen = ({ navigation }) => {
           }
       />
       </View>
-
-      <View style={styles.container}>
-        <Button
-          color='grey'
-          title="Combined List"
-          onPress={() =>
-            navigation.navigate('combList')
-          }
-      />
-      </View>
+      
     </View>
 
 
@@ -107,7 +108,7 @@ const mealPlan = ({ navigation }) => {
 
 const AboutScreen = ({ navigation, route }) => {
   return (
-    <View style={styles.container}>
+    <View style={styles.modContainer}>
        <Text>This was created by Shai Shkolnik</Text>
        <Text>This will be a fitness and healthy eating planner App</Text>
        <Text>Copyright 2021 All Rights Reserved</Text>
@@ -141,5 +142,12 @@ const styles = StyleSheet.create({
   },
   helloText: {
     fontSize: 48,
-  }
+  },
+  modContainer: {
+    flex: 1,
+    flexDirection:'column',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });

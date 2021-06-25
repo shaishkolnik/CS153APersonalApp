@@ -32,7 +32,6 @@ const NewProfile = (props) => {
               color='green' title='Change Name'
               onPress = {() => {
                 setName(text)
-                storeData(name)
               }}
         />
     </View>
@@ -60,9 +59,7 @@ const NewProfile = (props) => {
             onPress = {() => {
               const newBMI = (weight/height/height)*703
               setBMI(newBMI)
-              storeData(bmi)
             }}
-            value = {bmi}
         />
     </View>
 
