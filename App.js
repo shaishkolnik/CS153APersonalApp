@@ -1,31 +1,37 @@
 import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import React , {useState} from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { Image, TextInput, Button, StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Icon } from 'react-native-elements';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import CreateProf from './components/CreateProf';
 import workPlan from './components/workPlan';
-import CombinedList from './components/CombinedList';
+import CombinedList from './components/combinedList';
+import Vids from './components/vids';
 
 const Stack = createStackNavigator();
 
+const Tab = createBottomTabNavigator();
+
+
 export default function App () {
   return (
-    <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
+    <NavigationContainer theme={DarkTheme}>
+      <Tab.Navigator>
+          <Tab.Screen
             name="Home"
             component={HomeScreen}
             options={{ title: 'GoActive' }}
           />
-          <Stack.Screen name="Profile" component={ProfileScreen} />
-          <Stack.Screen name="CreateProf" component={CreateProf} />
-          <Stack.Screen name="About" component={AboutScreen} />
-          <Stack.Screen name="workPlan" component={workPlan} />
-          <Stack.Screen name="combList" component={CombinedList} />
-        </Stack.Navigator>
+          <Tab.Screen name="CreateProf" component={CreateProf} />
+          <Tab.Screen name="workPlan" component={workPlan} />
+          <Tab.Screen name="Recommended Workouts" component={CombinedList} />
+          <Tab.Screen name="Videos" component={Vids} />
+          <Tab.Screen name="About" component={AboutScreen} />
+        </Tab.Navigator>
     </NavigationContainer>
   );
 };
@@ -33,20 +39,11 @@ export default function App () {
 const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-    <View style={styles.container}>
-      <Button
-        color='green'
-        title="Your profile"
-        onPress={() =>
-          navigation.navigate('Profile', { name: 'Shai' })
-        }
-      />
-    </View>
 
     <View style={styles.container}>
       <Button
         color='red'
-        title="Create a new Profile"
+        title="Your Profile"
         onPress={() =>
           navigation.navigate('CreateProf')
         }
@@ -56,7 +53,7 @@ const HomeScreen = ({ navigation }) => {
     <View style={styles.container}>
       <Button
         color='orange'
-        title="Add Workout Plan"
+        title="Create Workout Plan"
         onPress={() =>
           navigation.navigate('workPlan')
         }
@@ -66,9 +63,9 @@ const HomeScreen = ({ navigation }) => {
     <View style={styles.container}>
       <Button
         color='grey'
-        title="Combined List"
+        title="Recommended Workouts"
         onPress={() =>
-          navigation.navigate('combList')
+          navigation.navigate('Recommended Workouts')
         }
     />
     </View>
@@ -82,7 +79,7 @@ const HomeScreen = ({ navigation }) => {
           }
       />
       </View>
-      
+
     </View>
 
 
@@ -93,18 +90,6 @@ const ProfileScreen = ({ navigation, route }) => {
   return <Text>This is {route.params.name}'s profile</Text>;
 };
 
-const mealPlan = ({ navigation }) => {
-
-  return(
-  <View style={styles.container}>
-    <Image
-      source={{uri: "https://i.pinimg.com/originals/72/d7/04/72d7049b2f2319f86a2929e8d65a8d9d.png"}}
-      style={{width: 500, height: 600}}
-    />
-  </View>
-  );
-
-};
 
 const AboutScreen = ({ navigation, route }) => {
   return (
@@ -136,6 +121,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#28ad21'
   },
   rowContainer: {
     flexDirection:'row',

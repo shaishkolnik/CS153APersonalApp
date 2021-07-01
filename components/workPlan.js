@@ -2,6 +2,12 @@ import React, { useState, useEffect }  from 'react';
 import { SafeAreaView, ScrollView, View, Button,
          FlatList, StyleSheet, Text, TextInput, StatusBar } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Icon } from 'react-native-elements';
+
+function useForceUpdate(){
+    const [value, setValue] = useState(0); // integer state
+    return () => setValue(value => value + 1); // update the state to force render
+}
 
 const WorkItem = (props) => {
 
@@ -31,6 +37,7 @@ const workPlan = (props) => {
   const [comment,setComment] = useState("")
   const [todoItems,setToDoItems]= useState([])
   const [isDone, setIsDone] = useState(false);
+
 
 
   useEffect(() => {getData()}
@@ -70,15 +77,14 @@ const workPlan = (props) => {
         }
   }
 
-  const clearAll = async () => {
-        try {
-          console.log('in clearData')
-          await AsyncStorage.clear()
-        } catch(e) {
-          console.log("error in clearData ")
-          console.dir(e)
-          // clear error
-        }
+  const clear = async (key) => {
+      try {
+          await AsyncStorage.removeItem('@todo_list');
+          return true;
+      }
+      catch(e) {
+          return false;
+      }
   }
 
 
@@ -154,33 +160,36 @@ const workPlan = (props) => {
         />
       </View>
       <View style={styles.rowContainer}>
-        <Button
-           title={"add"}
-           color="blue"
-           onPress = {() => {
-             const newToDoItems =
-               todoItems.concat(
-                 {'todo':todo,
-                 'tool':tool,
-                 'dueDate':dueDate,
-                 'comment':comment,
-                 'date':new Date(),
-                 'isDone': false,
-               })
-             setToDoItems(newToDoItems)
-             storeData(newToDoItems)
-             setTodo("")
-             setTool("")
-             setDueDate("")
-             setComment("")
-           }}
-        />
-       <Button
-          title={"clear"}
-          color="red"
-          onPress = {() => {clearAll()
+        <Icon
+          raised
+          name='add-circle-outline'
+          type='ionicons'
+          color='blue'
+          onPress={() => {
+            const newToDoItems =
+              todoItems.concat(
+                {'todo':todo,
+                'tool':tool,
+                'dueDate':dueDate,
+                'comment':comment,
+                'date':new Date(),
+                'isDone': false,
+              })
+            setToDoItems(newToDoItems)
+            storeData(newToDoItems)
+            setTodo("")
+            setTool("")
+            setDueDate("")
+            setComment("")
           }}
-        />
+         />
+         <Icon
+           raised
+           name='remove-circle-outline'
+           type='ionicons'
+           color='red'
+           onPress={() => {clear()}}
+          />
       </View>
       <FlatList
         data={todoItems}
