@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Text, FlatList, Switch, SafeAreaView, TouchableOpacity, Modal } from 'react-native';
+import {View, StyleSheet, Text, FlatList, Switch, SafeAreaView, TouchableOpacity, Modal, ScrollView } from 'react-native';
 
 export default (props) => {
   const [open, setOpen] = React.useState(false)
@@ -20,31 +20,33 @@ export default (props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ flex: 1, backgroundColor: '#FFF', padding: 16 }}>
-        <View>
-          <Text>Recommended Workouts: {"\n"} </Text>
-          {data.filter(item => item.selected).map(item => <Text key={item.label}>{item.label}: {item.workouts}</Text>)}
-        </View>
-        <TouchableOpacity onPress={openList}>
-          <View style={{ padding: 16, borderWidth: 1, borderColor: '#000' }}>
-            <Text>Select Body Part:</Text>
+      <View style={{ flex: 1, backgroundColor: '#31bd36', padding: 16 }}>
+        <ScrollView>
+          <View>
+            <Text>Recommended Workouts: {"\n"} </Text>
+            {data.filter(item => item.selected).map(item => <Text style={styles.workout} key={item.label}>{item.label}: {item.workouts}</Text>)}
           </View>
-        </TouchableOpacity>
-        <Modal animationType='slide' transparent={true} visible={open === true}>
-          <TouchableOpacity activeOpacity={1} onPress={closeList}>
-            <View style={{ flex: 1}}>
-              <View style={styles.listWrapper}>
-                <View style={styles.listContainer}>
-                  <FlatList
-                    data={data}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.label}
-                  />
-                </View>
-              </View>
+          <TouchableOpacity onPress={openList}>
+            <View style={{ padding: 16, borderWidth: 1, borderColor: '#000' }}>
+              <Text>Select Body Part:</Text>
             </View>
           </TouchableOpacity>
-        </Modal>
+          <Modal animationType='slide' transparent={true} visible={open === true}>
+            <TouchableOpacity activeOpacity={1} onPress={closeList}>
+              <View style={{ flex: 1}}>
+                <View style={styles.listWrapper}>
+                  <View style={styles.listContainer}>
+                    <FlatList
+                      data={data}
+                      renderItem={renderItem}
+                      keyExtractor={item => item.label}
+                    />
+                  </View>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </Modal>
+          </ScrollView>
       </View>
     </SafeAreaView>
   );
@@ -83,6 +85,10 @@ const styles = StyleSheet.create({
   },
   title: {
     textTransform: 'capitalize',
-    color: '#000'
+    color: '#000',
+    fontSize: 16
+  },
+  workout: {
+    fontSize: 14,
   }
 });

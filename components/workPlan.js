@@ -3,6 +3,7 @@ import { SafeAreaView, ScrollView, View, Button,
          FlatList, StyleSheet, Text, TextInput, StatusBar } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Icon } from 'react-native-elements';
+import RNRestart from 'react-native-restart';
 
 function useForceUpdate(){
     const [value, setValue] = useState(0); // integer state
@@ -38,7 +39,7 @@ const workPlan = (props) => {
   const [todoItems,setToDoItems]= useState([])
   const [isDone, setIsDone] = useState(false);
 
-
+  const forceUpdate = useForceUpdate();
 
   useEffect(() => {getData()}
            ,[])
@@ -118,20 +119,21 @@ const workPlan = (props) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}> Workout Plan </Text>
+      <Text style={styles.headerText}> Workout Planner </Text>
       <View>
         <TextInput
-          style={{height: 20}}
+          style={styles.txtInput}
           placeholder="Excercise"
           onChangeText={text => {
                setTodo(text);
              }}
           value = {todo}
+          borderColor = 'black'
         />
       </View>
       <View>
         <TextInput
-          style={{height: 20}}
+          style={styles.txtInput}
           placeholder="Equipment"
           onChangeText={text => {
                setTool(text);
@@ -141,7 +143,7 @@ const workPlan = (props) => {
       </View>
       <View>
         <TextInput
-          style={{height: 20}}
+          style={styles.txtInput}
           placeholder="Sets"
           onChangeText={text => {
                setDueDate(text);
@@ -151,7 +153,7 @@ const workPlan = (props) => {
       </View>
       <View>
         <TextInput
-          style={{height: 20}}
+          style={styles.txtInput}
           placeholder="Reps"
           onChangeText={text => {
                setComment(text);
@@ -188,7 +190,8 @@ const workPlan = (props) => {
            name='remove-circle-outline'
            type='ionicons'
            color='red'
-           onPress={() => {clear()}}
+           onPress={() => {clear()
+                           getData()}}
           />
       </View>
       <FlatList
@@ -210,20 +213,29 @@ const styles = StyleSheet.create({
     textAlign:'left',
     marginTop:20,
     padding:20,
+    backgroundColor: '#28ad21'
   },
   todoItem:{
     justifyContent:'center',
   },
   headerText: {
     textAlign:'center',
-    backgroundColor:'#aaa',
+    backgroundColor:'black',
     fontSize: 16,
     padding:10,
-    color: 'blue'
+    color: 'green'
   },
   rowContainer: {
     flexDirection:'row',
     justifyContent: 'center'
+  },
+  txtInput: {
+    height: 30,
+    fontSize: 25,
+    borderColor: 'black',
+    borderWidth: 1,
+    placeholderTextColor: 'black',
+    marginBottom: 10
   }
 
 });
