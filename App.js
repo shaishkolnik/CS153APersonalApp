@@ -130,7 +130,6 @@ const styles = StyleSheet.create({
   },
   aboutTxt: {
     color: 'green',
-    font: 'Marker Felt',
     fontSize: 30
   },
   modContainer: {

@@ -234,7 +234,6 @@ const styles = StyleSheet.create({
     fontSize: 25,
     borderColor: 'black',
     borderWidth: 1,
-    placeholderTextColor: 'black',
     marginBottom: 10
   }
 

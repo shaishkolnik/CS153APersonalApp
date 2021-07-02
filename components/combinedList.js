@@ -19,36 +19,37 @@ export default (props) => {
   const renderItem = ({ item, index }) => <ItemRenderer key={index} index={index} selected={item.selected} label={item.label} workouts={item.workouts} onUpdateValue={onUpdateValue} />
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={{ flex: 1, backgroundColor: '#31bd36', padding: 16 }}>
-        <ScrollView>
-          <View>
-            <Text>Recommended Workouts: {"\n"} </Text>
-            {data.filter(item => item.selected).map(item => <Text style={styles.workout} key={item.label}>{item.label}: {item.workouts}</Text>)}
-          </View>
-          <TouchableOpacity onPress={openList}>
-            <View style={{ padding: 16, borderWidth: 1, borderColor: '#000' }}>
-              <Text>Select Body Part:</Text>
+    <ScrollView>
+      <SafeAreaView style={styles.container}>
+        <View style={{ flex: 1, backgroundColor: '#31bd36', padding: 16 }}>
+            <View>
+              <Text>Recommended Workouts: {"\n"} </Text>
+              {data.filter(item => item.selected).map(item => <Text style={styles.workout} key={item.label}>{item.label}: {item.workouts}</Text>)}
             </View>
-          </TouchableOpacity>
-          <Modal animationType='slide' transparent={true} visible={open === true}>
-            <TouchableOpacity activeOpacity={1} onPress={closeList}>
-              <View style={{ flex: 1}}>
-                <View style={styles.listWrapper}>
-                  <View style={styles.listContainer}>
-                    <FlatList
-                      data={data}
-                      renderItem={renderItem}
-                      keyExtractor={item => item.label}
-                    />
-                  </View>
-                </View>
+            <TouchableOpacity onPress={openList}>
+              <View style={{ padding: 16, borderWidth: 1, borderColor: '#000' }}>
+                <Text>Select Body Part:</Text>
               </View>
             </TouchableOpacity>
-          </Modal>
-          </ScrollView>
-      </View>
-    </SafeAreaView>
+            <Modal animationType='slide' transparent={true} visible={open === true}>
+              <TouchableOpacity activeOpacity={1} onPress={closeList}>
+                <View style={{ flex: 1}}>
+                  <View style={styles.listWrapper}>
+                    <View style={styles.listContainer}>
+                      <FlatList
+                        data={data}
+                        renderItem={renderItem}
+                        keyExtractor={item => item.label}
+                      />
+                    </View>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            </Modal>
+          </View>
+          </SafeAreaView>
+        </ScrollView>
+
   );
 }
 
